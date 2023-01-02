@@ -15,8 +15,8 @@ import (
 func main() {
 	certManager := autocert.Manager{
 		Prompt:     autocert.AcceptTOS,
-		HostPolicy: autocert.HostWhitelist("learningcode.in"),                  //Your domain here
-		Cache:      autocert.DirCache("/etc/letsencrypt/live/learningcode.in"), //Folder for storing certificates
+		HostPolicy: autocert.HostWhitelist("learningcode.in", "www.learningcode.in"), //Your domain here
+		Cache:      autocert.DirCache("/etc/letsencrypt/live/learningcode.in"),       //Folder for storing certificates
 
 	}
 	s := Server{}
