@@ -29,7 +29,7 @@ func main() {
 		},
 	}
 
-	//go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
 
 	log.Fatal(server.ListenAndServeTLS("", "")) //Key and cert are coming from Let's Encrypt
 	//http.ListenAndServe(":8000", nil)
