@@ -1,19 +1,38 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+
+	"golang.org/x/crypto/acme/autocert"
 )
 
 func main() {
+	certManager := autocert.Manager{
+		Prompt:     autocert.AcceptTOS,
+		HostPolicy: autocert.HostWhitelist("learningcode.in"),                  //Your domain here
+		Cache:      autocert.DirCache("/etc/letsencrypt/live/learningcode.in"), //Folder for storing certificates
+
+	}
 	s := Server{}
 	http.Handle("/", http.FileServer(http.Dir("./")))
 	http.HandleFunc("/contactform", s.ContactForm)
 	http.HandleFunc("/bookform", s.BookForm)
-	http.ListenAndServe(":8000", nil)
+	server := &http.Server{
+		Addr: ":https",
+		TLSConfig: &tls.Config{
+			GetCertificate: certManager.GetCertificate,
+		},
+	}
+
+	//go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+
+	log.Fatal(server.ListenAndServeTLS("", "")) //Key and cert are coming from Let's Encrypt
+	//http.ListenAndServe(":8000", nil)
 }
 
 type Server struct {
