@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"golang.org/x/crypto/acme"
 	"golang.org/x/crypto/acme/autocert"
 )
 
@@ -26,6 +27,10 @@ func main() {
 		Addr: ":https",
 		TLSConfig: &tls.Config{
 			GetCertificate: certManager.GetCertificate,
+			NextProtos: []string{
+				"h2", "http/1.1", // enable HTTP/2
+				acme.ALPNProto, // enable tls-alpn ACME challenges
+			},
 		},
 	}
 
