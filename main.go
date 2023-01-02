@@ -9,16 +9,15 @@ import (
 	"os"
 
 	"golang.org/x/crypto/acme"
-	"golang.org/x/crypto/acme/autocert"
 )
 
 func main() {
-	certManager := autocert.Manager{
-		Prompt:     autocert.AcceptTOS,
-		HostPolicy: autocert.HostWhitelist("learningcode.in"),                  //Your domain here
-		Cache:      autocert.DirCache("/etc/letsencrypt/live/learningcode.in"), //Folder for storing certificates
+	//certManager := autocert.Manager{
+	//Prompt:     autocert.AcceptTOS,
+	//HostPolicy: autocert.HostWhitelist("learningcode.in"),                  //Your domain here
+	//Cache:      autocert.DirCache("/etc/letsencrypt/live/learningcode.in"), //Folder for storing certificates
 
-	}
+	//}
 	s := Server{}
 	http.Handle("/", http.FileServer(http.Dir("./")))
 	http.HandleFunc("/contactform", s.ContactForm)
@@ -34,10 +33,10 @@ func main() {
 		},
 	}
 
-	go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+	//go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
 
-	log.Fatal(server.ListenAndServeTLS("", "")) //Key and cert are coming from Let's Encrypt
-	//http.ListenAndServe(":8000", nil)
+	//log.Fatal(server.ListenAndServeTLS("", "")) //Key and cert are coming from Let's Encrypt
+	http.ListenAndServe(":80", nil)
 }
 
 type Server struct {
