@@ -34,11 +34,16 @@ func main() {
 		},
 	}
 
-	//go http.ListenAndServe(":http", certManager.HTTPHandler(nil))
+        go http.ListenAndServe(":http", http.HandlerFunc(redirectToHttps))
 
 	log.Fatal(server.ListenAndServeTLS("", "")) //Key and cert are coming from Let's Encrypt
 	// http.ListenAndServe(":80", nil)
 }
+
+func redirectToHttps(w http.ResponseWriter, r *http.Request) {
+	    // Redirect the incoming HTTP request. Note that "127.0.0.1:443" will only work if you are accessing the server from your local machine.
+	        http.Redirect(w, r, "https://learningcode.in"+r.RequestURI, http.StatusMovedPermanently)
+	}
 
 type Server struct {
 }
