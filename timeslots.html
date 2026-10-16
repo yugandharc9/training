@@ -13,6 +13,7 @@
     <title>Python Training</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
   <body>
 
@@ -26,7 +27,7 @@
             <a class="nav-link" href="index.html">Home</a>
           </li>
           <li class="nav-item">
-		  <a class="nav-link" href="courses.html"> Courses</a>
+		  <a class="nav-link" href="courses.html">Courses</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="about.html">Meet Tutor</a>
@@ -40,80 +41,99 @@
         </ul>
       </div>
     </nav>
+    <div class="page-hero">
+      <div class="container">
+        <div class="hero-kicker">Live online batches</div>
+        <h1>Choose the right class.</h1>
+        <p class="lead">Demo first. Learn clearly. Join only if it fits.</p>
+      </div>
+    </div>
     <div class="container mt-5">
-  <h1>Time Slots and Availability</h1>
-  <div class="row mt-4">
+      <div class="card border-0 shadow-sm mb-4 text-center">
+        <div class="card-body">
+          <blockquote class="mb-0 text-muted" style="font-size: 1.05rem; line-height: 1.8;">
+            “I cannot teach anybody anything. I can only make them think.”
+            <footer class="blockquote-footer mt-2">Socrates</footer>
+          </blockquote>
+        </div>
+      </div>
+
+  <div class="row mt-4 justify-content-center">
     <div class="col-md-6">
-	    <h2> Python Programming Fundamentals </h2>
-      <ul>
-        <li>Monday-Friday 7:00 AM - 8:00 AM</li>
-        <li>Monday-Friday 8:00 AM - 9:00 AM</li>
-      </ul>
+      <div class="card h-100">
+        <div class="card-body d-flex flex-column text-center">
+          <h2 class="h4">Python Programming Fundamentals</h2>
+          <ul class="text-left mb-3">
+            <li>Monday-Friday 7:00 AM - 8:00 AM (Online)</li>
+            <li>Monday-Friday 8:00 PM - 9:00 PM (Online)</li>
+          </ul>
+          <a href="courses.html" class="btn btn-outline-primary mt-auto">Courses</a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-md-6">
-	    <h2> Django Web Development </h2>
-      <ul>
-        <li>Monday-Friday 6:00 PM - 7:00 PM</li>
-      </ul>
-    </div>
-  </div>
-  <div class="row mt-4">
-    <div class="col-md-6">
-	    <h2>Machine Learning with Python </h2>
-      <ul>
-        <li>Monday-Friday 7:30 PM - 8:30 PM</li>
-      </ul>
-    </div>
-  </div>
-  <div class="row mt-4">
-    <div class="col-md-6">
-      <h2>Book Your Time Slot</h2>
-      <p>Our courses are held online, so you can participate from anywhere with an internet connection. To book your time slot, please fill out the form below. We will confirm your reservation via email within 24 hours.</p>
-      <form name="myForm" method="POST" action="/bookform" >
-        <div class="form-group">
-<label for="name">Name</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+  <div class="row mt-5 justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h2>Book a demo first</h2>
+          <p>Before you enroll, request a free demo session to experience the teaching style, pace, and clarity. If the class feels right, you can continue and pay for the full batch after the session.</p>
+          <form id="class-registration-form">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" class="form-control" pattern="[0-9]{10}" id="phone" name="phone" placeholder="Enter your phone" required>
+            </div>
+            <div class="form-group">
+              <label for="course-slot">Course</label>
+              <select class="form-control" id="course-slot" name="course" required>
+                <option value="" disabled selected>-- Select course --</option>
+              </select>
+            </div>
+            <div class="form-group" id="time-slot-group">
+              <label for="time-slot">Time Slot</label>
+              <select class="form-control" id="time-slot" name="time" required>
+                <option value="" disabled selected>-- Select time --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Selected fee</label>
+              <div id="selected-price" class="form-control-plaintext text-success font-weight-bold">Select a course to see the fee.</div>
+            </div>
+            <div id="upcoming-note" class="upcoming-note d-none">
+              <strong>Timings are not decided yet.</strong>
+              Enroll now and we will find a suitable time for you. No payment is needed until your batch is confirmed.
+            </div>
+            <div class="form-group form-check" id="demo-group">
+              <input type="checkbox" class="form-check-input" id="demo-class" name="demoClass">
+              <label class="form-check-label" for="demo-class">I want a free demo first. I will pay only after the demo if I choose to join.</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit-booking-btn">Book Demo / Continue</button>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-	  <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" class="form-control" pattern="[0-9]{10}" id="phone" name="phone" placeholder="Enter your phone" required>
-        </div>
-        <div class="form-group">
-          <label for="course-slot">Course</label>
-          <select class="form-control" id="course-slot" name="course" required>
-	    <option disabled selected value > -- Select course -- </option>
-            <option value="py"> Python Programming Fundamentals</option>
-            <option value="dj"> Django Web Development</option>
-            <option value="ml"> Machine Learning with Python</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="time-slot">Time Slot</label>
-          <select class="form-control" id="time-slot" name="time" required>
-	    <option disabled selected value > -- Select time -- </option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Book</button>
-      </form>
+      </div>
     </div>
   </div>
 </div>
 
-<footer class="bg-light py-3 mt-5">
+<div id="checkout-status" class="toast-notice" role="status" aria-live="polite"></div>
+
+<footer class="site-footer">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
             <h4>About Us</h4>
             <p>
 
-	    Our Python certification program tests your skills and knowledge in Python development. Upon successful completion of the exam, you will receive a recognized Python certification, which will help you stand out in the job market and advance your career as a Python developer.
+	    We help you build real Python skills that matter in the real world. If you want a certificate, we can support that too — but the real value is learning to solve problems, build products, and think like an engineer. A strong developer is defined by capability, not just a piece of paper.
 
 
 </p>
@@ -140,49 +160,261 @@
 		 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<script> 
+<script>
+  const backendBaseUrl = window.TRAINING_BACKEND_URL || 'https://qmnrbhmdgnox2iyaphrwosmbky0pgtia.lambda-url.ap-south-1.on.aws';
+  const courseData = {};
+
   const courseSlot = document.getElementById('course-slot');
-  var ts = document.getElementById('time-slot');
-  courseSlot.addEventListener('change', function() {
-  // this function will run when the selected option changes
-  const selectedOption = this.options[this.selectedIndex];
-  console.log(selectedOption.value); // prints the value of the selected option
-	  if (selectedOption.value == "py"){
-		  var length = ts.options.length;
-		  for (i = 1; i < length; i++) {
-		  ts.options[i] = null;
-		  }
-		  const newOption = document.createElement('option');
-	          newOption.value = 'wdpy78am';
-                  newOption.text = 'Monday-Friday 7:00 AM - 8:00 AM';
+  const timeSlot = document.getElementById('time-slot');
+  const selectedPrice = document.getElementById('selected-price');
+  const form = document.getElementById('class-registration-form');
+  const statusBox = document.getElementById('checkout-status');
 
-		  const newOption2 = document.createElement('option');
-	          newOption2.value = 'wdpy89am';
-                  newOption2.text = 'Monday-Friday 8:00 AM - 9:00 AM';
-                  ts.options.add(newOption2);
-                  ts.options.add(newOption);
+  async function loadCourseCatalog() {
+    try {
+      const response = await fetch(`${backendBaseUrl}/api/training/courses`);
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error('Unable to load class schedule.');
+      }
 
-	  } else if(selectedOption.value == "dj"){
-		  var length = ts.options.length;
-		  for (i = 1; i < length; i ++) {
-		  ts.options[i] = null;
-		  }
-		  const newOption = document.createElement('option');
-	          newOption.value = 'wddj67pm';
-                  newOption.text = 'Monday-Friday 6:00 PM - 7:00 PM';
-                  ts.options.add(newOption);
-	  
-	  } else if(selectedOption.value == "ml"){
-		  var length = ts.options.length;
-		  for (i = 1; i < length; i ++) {
-		  ts.options[i] = null;
-		  }
-		  const newOption = document.createElement('option');
-	          newOption.value = 'mlwd730830pm';
-                  newOption.text = 'Monday-Friday 7:30 PM - 8:30 PM';
-                  ts.options.add(newOption);
+      const courses = Array.isArray(payload) ? payload : (payload.courses || []);
+      const liveGroup = document.createElement('optgroup');
+      liveGroup.label = 'Live batches';
+      const upcomingGroup = document.createElement('optgroup');
+      upcomingGroup.label = 'Coming soon — timings to be decided';
 
-	  }
+      courses.forEach((course) => {
+        const isLive = course.isActive !== false;
+        const amount = Number(course.price ?? course.amount ?? 0);
+        const priceText = '₹' + (amount / 100).toLocaleString('en-IN');
+        const slots = Array.isArray(course.slots) ? course.slots : (Array.isArray(course.scheduleRefs) ? course.scheduleRefs.map((ref) => ({ value: ref, label: ref })) : []);
 
-  }  );
+        courseData[course.code] = {
+          name: course.name,
+          price: priceText,
+          isLive,
+          slots: slots.map((slot) => ({ value: slot.id ?? slot.value ?? slot, label: slot.label ?? slot }))
+        };
+
+        const option = document.createElement('option');
+        option.value = course.code;
+        option.textContent = course.name + ' — ' + priceText + (isLive ? '' : ' (coming soon)');
+        (isLive ? liveGroup : upcomingGroup).appendChild(option);
+      });
+
+      [liveGroup, upcomingGroup].forEach((group) => {
+        if (group.children.length) {
+          courseSlot.appendChild(group);
+        }
+      });
+
+      const requestedCourse = new URLSearchParams(window.location.search).get('course');
+      if (requestedCourse && courseData[requestedCourse]) {
+        courseSlot.value = requestedCourse;
+        populateSlots(requestedCourse);
+      }
+    } catch (error) {
+      setStatus('Unable to load course schedule from the backend.', 'error');
+    }
+  }
+
+  let statusTimer;
+  const statusTitles = { success: 'Request received', error: 'Something went wrong', info: 'Please wait' };
+  const statusIcons = { success: '&#10003;', error: '!', info: '' };
+
+  function setStatus(message, type = 'info') {
+    clearTimeout(statusTimer);
+    statusBox.className = `toast-notice toast-${type}`;
+    statusBox.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    statusBox.innerHTML = `
+      <div class="toast-icon">${statusIcons[type] || ''}</div>
+      <div class="toast-content">
+        <div class="toast-title">${statusTitles[type] || statusTitles.info}</div>
+        <div class="toast-message"></div>
+      </div>
+      <button type="button" class="toast-close" aria-label="Close">&times;</button>`;
+    statusBox.querySelector('.toast-message').textContent = message;
+    statusBox.querySelector('.toast-close').addEventListener('click', hideStatus);
+    requestAnimationFrame(() => statusBox.classList.add('show'));
+    if (type !== 'info') {
+      statusTimer = setTimeout(hideStatus, type === 'success' ? 7000 : 9000);
+    }
+  }
+
+  function hideStatus() {
+    clearTimeout(statusTimer);
+    statusBox.classList.remove('show');
+  }
+
+  const timeSlotGroup = document.getElementById('time-slot-group');
+  const demoGroup = document.getElementById('demo-group');
+  const demoCheckbox = document.getElementById('demo-class');
+  const upcomingNote = document.getElementById('upcoming-note');
+  const submitButton = document.getElementById('submit-booking-btn');
+
+  function setUpcomingMode(isUpcoming) {
+    timeSlot.required = !isUpcoming;
+    timeSlotGroup.classList.toggle('d-none', isUpcoming);
+    demoGroup.classList.toggle('d-none', isUpcoming);
+    upcomingNote.classList.toggle('d-none', !isUpcoming);
+    submitButton.textContent = isUpcoming ? 'Enroll' : 'Book Demo / Continue';
+    if (isUpcoming) {
+      demoCheckbox.checked = false;
+    }
+  }
+
+  function addTimeOption(value, label) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = label;
+    timeSlot.appendChild(option);
+  }
+
+  function populateSlots(courseKey) {
+    timeSlot.innerHTML = '<option value="" selected disabled>-- Select time --</option>';
+    const course = courseData[courseKey];
+    if (!course) {
+      setUpcomingMode(false);
+      selectedPrice.textContent = 'Select a course to see the fee.';
+      return;
+    }
+
+    setUpcomingMode(!course.isLive);
+    if (!course.isLive) {
+      selectedPrice.textContent = course.name + ' — ' + course.price + ' · Coming soon';
+      return;
+    }
+
+    selectedPrice.textContent = course.name + ' — ' + course.price;
+    course.slots.forEach((slot) => addTimeOption(slot.value, slot.label));
+  }
+
+  function resetBookingForm() {
+    form.reset();
+    populateSlots('');
+  }
+
+  courseSlot.addEventListener('change', function () {
+    populateSlots(this.value);
+  });
+
+  loadCourseCatalog();
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const bookingData = {
+      name: document.getElementById('name').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      course: courseSlot.value,
+      time: timeSlot.value
+    };
+
+    const wantsDemo = demoCheckbox.checked;
+    const selectedCourse = courseData[bookingData.course];
+    const isUpcoming = Boolean(selectedCourse && !selectedCourse.isLive);
+
+    if (!bookingData.name || !bookingData.email || !bookingData.phone || !bookingData.course || (!isUpcoming && !bookingData.time)) {
+      setStatus('Please complete all fields before booking.', 'error');
+      return;
+    }
+
+    try {
+      if (isUpcoming) {
+        setStatus('Enrolling you...', 'info');
+        const waitlistResponse = await fetch(`${backendBaseUrl}/api/training/waitlist`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingData)
+        });
+
+        const waitlistData = await waitlistResponse.json();
+        if (!waitlistResponse.ok) {
+          throw new Error(waitlistData.error || 'Unable to complete your enrollment.');
+        }
+
+        setStatus(waitlistData.message || 'You are enrolled. We will find a suitable time for you and get in touch.', 'success');
+        resetBookingForm();
+        return;
+      }
+
+      if (wantsDemo) {
+        setStatus('Requesting your free demo class...', 'info');
+        const demoResponse = await fetch(`${backendBaseUrl}/api/training/demo`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingData)
+        });
+
+        const demoData = await demoResponse.json();
+        if (!demoResponse.ok) {
+          throw new Error(demoData.error || 'Unable to request the demo class.');
+        }
+
+        setStatus(demoData.message || 'Demo class requested successfully. We will confirm the slot with you soon.', 'success');
+        resetBookingForm();
+        return;
+      }
+
+      setStatus('Creating secure payment link...', 'info');
+
+      const orderResponse = await fetch(`${backendBaseUrl}/api/training/checkout/order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+      });
+
+      const orderData = await orderResponse.json();
+      if (!orderResponse.ok) {
+        throw new Error(orderData.error || 'Unable to create payment session.');
+      }
+
+      const options = {
+        key: orderData.key_id,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Python 101',
+        description: orderData.course,
+        order_id: orderData.order_id,
+        handler: async function (response) {
+          try {
+            const verificationResponse = await fetch(`${backendBaseUrl}/api/training/checkout/verify`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature
+              })
+            });
+
+            const verificationData = await verificationResponse.json();
+            if (!verificationResponse.ok) {
+              throw new Error(verificationData.error || 'Payment verification failed.');
+            }
+
+            setStatus(verificationData.message || 'Payment verified and class booked successfully.', 'success');
+            resetBookingForm();
+          } catch (error) {
+            setStatus(error.message || 'Payment verification failed.', 'error');
+          }
+        },
+        prefill: {
+          name: bookingData.name,
+          email: bookingData.email,
+          contact: bookingData.phone
+        },
+        theme: {
+          color: '#2d6cdf'
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      setStatus(error.message || 'Something went wrong while starting checkout.', 'error');
+    }
+  });
 </script>
