@@ -438,3 +438,23 @@ select {
   font-size: 0.95rem;
   line-height: 1.5;
 }
+
+.course-topics {
+  margin-bottom: 1rem;
+}
+
+.course-topics summary {
+  color: #17457d;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.course-topics ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.course-topics li {
+  margin-bottom: 0.25rem;
+}
